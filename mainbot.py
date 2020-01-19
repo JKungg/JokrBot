@@ -3,8 +3,7 @@ from discord.ext import commands
 import asyncio
 import os
 
-
-TOKEN = 'NjY4MjYzNTIwNzEzODM0NTI0.XiSO5Q.pk7w0WeMJldzb7kzl7E9B31cLeo'
+token = os.environ.get('AuthToken')
 
 client = commands.Bot(command_prefix = '!')
 
@@ -31,4 +30,4 @@ async def on_message(message):
         await message.delete()
 
 
-client.run(TOKEN)
+client.run(token)

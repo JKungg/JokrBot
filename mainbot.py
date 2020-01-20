@@ -20,6 +20,14 @@ async def clear(ctx, amount=6):
     await ctx.channel.purge(limit=6)
     await ctx.channel.send("**Succesfully deleted last 5 messages :)**")
 
+@client.command()
+async def cmds(ctx):
+    await ctx.channel.send("I currently have 3 Working Commands")
+    await ctx.channel.send("```.sremind (time) >>> Reminds the team the amount of time before a scrim!```")
+    await ctx.channel.send("```.scrim (day), (time) >>> Posts the scrim into the scrim schedule!```")
+    await ctx.channel.send("```And the last command is not for you!```")
+
+
 
 @client.command()
 async def sremind(ctx, arg1, arg2):

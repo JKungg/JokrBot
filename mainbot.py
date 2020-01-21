@@ -12,7 +12,7 @@ client = commands.Bot(command_prefix = '.')
 
 @client.command()
 @commands.has_role('jokr')
-async def scrim(ctx, message, arg1, arg2):
+async def scrim(ctx, arg1, arg2):
     await client.get_channel(615938985914662922).send(f"@everyone Scrim Scheduled for: **{arg1.capitalize()}, {arg2.capitalize()}**")
     await ctx.message.delete()
 

@@ -5,6 +5,7 @@ import os
 import random
 import time
 import datetime
+import json
 
 token = os.environ.get('AuthToken')
 
@@ -48,7 +49,7 @@ async def clear(ctx, int1):
 @client.command()
 async def cmds(ctx):
     await ctx.channel.send("I currently have a few Working Commands")
-    await ctx.channel.send("```.sremind (time) >>> Reminds the team the amount of time before a scrim/game!\n.scrim (day) (time) >>> Posts the scrim into the scrim schedule!\n.setgame (day) (time) >>> For settings League Games!\n.rpc (rock, paper or scissors) >>> Simple game of Rock Paper Scissors!\n.rpcstats >>> Shows the total amount of server wins, ties and losses for RPC Games.\n.ryan >> Shows a beautiful picture of ryan!\n.clear (amount of lines) >>> Clears the amount of lines given!```")
+    await ctx.channel.send("```.sremind (time) >>> Reminds the team the amount of time before a scrim/game!\n.scrim (day) (time) >>> Posts the scrim into the scrim schedule!\n.setgame (day) (time) >>> For settings League Games!\n.rpc (rock, paper or scissors) >>> Simple game of Rock Paper Scissors!\n.rpcstats >>> Shows the total amount of server wins, ties and losses for RPC Games.\n.findword (word) >>> Little Dictionnary that uses json imports.\n.ryan >> Shows a beautiful picture of ryan!\n.clear (amount of lines) >>> Clears the amount of lines given!```")
 
 @client.command()
 async def rpc(ctx, int1):
@@ -107,6 +108,16 @@ async def rpcstats(ctx):
     loss = rsl.count('Loss ')
     stats.close()
     await ctx.channel.send("```Wins = " + str(win) + "\nDraws = " + str(ties) + "\nLosses = " + str(loss) + "```")
+
+@client.command()
+async def findword(ctx, arg1):
+    wordsdata = json.load(open("JokrBot\data.json"))
+    arg1 = arg1.casefold()
+    if arg1 in wordsdata:
+        wordfound = wordsdata.get(arg1)
+        await ctx.channel.send(' '.join(wordfound))
+    else:
+        await ctx.channel.send("Word not found, double check the spelling of the word.")
 
 ## Fun Commands <3
 

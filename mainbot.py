@@ -4,34 +4,51 @@ import asyncio
 import os
 import random
 import time
+import datetime
 
 token = os.environ.get('AuthToken')
 
 client = commands.Bot(command_prefix = '.')
 
+## Useful Commands, for Jokr.
+
 
 @client.command()
 @commands.has_role('jokr')
-async def scrim(ctx, message, arg1, arg2):
-    await client.get_channel(615938985914662922).send(f"@everyone Scrim Scheduled for: **{arg1.capitalize()}, {arg2.capitalize()}**")
+async def scrim(ctx, arg1, arg2):
+    role = ctx.guild.get_role(629817762897985576)
+    await client.get_channel(615938985914662922).send(f"{role.mention} Scrim Scheduled for: **{arg1.capitalize()}, {arg2.capitalize()}**")
     await ctx.message.delete()
 
 @client.command()
-@commands.has_role('admin')
-async def clear(ctx, amount=6):
-    await ctx.channel.purge(limit=6)
-    await ctx.channel.send("**Succesfully deleted last 5 messages :)**")
-
-@client.command()
-async def cmds(ctx):
-    await ctx.channel.send("I currently have a few Working Commands")
-    await ctx.channel.send("```.sremind (time) >>> Reminds the team the amount of time before a scrim!\n.scrim (day), (time) >>> Posts the scrim into the scrim schedule!\n.rpc (rock, paper or scissors) >>> Simple game of Rock Paper Scissors!\n.rpcstats >>> Shows the total amount of server wins, ties and losses for RPC Games.\n.ryan >> Shows a beautiful picture of ryan!\nAnd the last command is not for you!```")
-
+@commands.has_role('jokr')
+async def setgame(ctx, arg1, arg2):
+    role = ctx.guild.get_role(629817762897985576)
+    await client.get_channel(615938985914662922).send(f"{role.mention} League Match Scheduled for: **{arg1.capitalize()}, {arg2.capitalize()}**")
+    await ctx.message.delete()
 
 @client.command()
 async def sremind(ctx, arg1, arg2):
     await client.get_channel(631644755083657267).send(f"```Reminder you have a scrim in >>> {arg1} {arg2}```")
     await ctx.message.delete()
+
+
+## General Use Commands.
+
+
+@client.command()
+@commands.has_role('admin')
+async def clear(ctx, int1):
+    await ctx.message.delete()
+    await ctx.channel.purge(limit=int(int1))
+    confirmation = await ctx.channel.send(f"**Succesfully deleted last {str(int1)} messages :)**")
+    time.sleep(3)
+    await confirmation.delete() 
+
+@client.command()
+async def cmds(ctx):
+    await ctx.channel.send("I currently have a few Working Commands")
+    await ctx.channel.send("```.sremind (time) >>> Reminds the team the amount of time before a scrim/game!\n.scrim (day) (time) >>> Posts the scrim into the scrim schedule!\n.setgame (day) (time) >>> For settings League Games!\n.rpc (rock, paper or scissors) >>> Simple game of Rock Paper Scissors!\n.rpcstats >>> Shows the total amount of server wins, ties and losses for RPC Games.\n.ryan >> Shows a beautiful picture of ryan!\n.clear (amount of lines) >>> Clears the amount of lines given!```")
 
 @client.command()
 async def rpc(ctx, int1):
@@ -91,6 +108,7 @@ async def rpcstats(ctx):
     stats.close()
     await ctx.channel.send("```Wins = " + str(win) + "\nDraws = " + str(ties) + "\nLosses = " + str(loss) + "```")
 
+## Fun Commands <3
 
 @client.command()
 async def ryan(ctx):

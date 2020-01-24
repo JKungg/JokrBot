@@ -101,7 +101,7 @@ async def rpc(ctx, int1):
 
 @client.command()
 async def rpcstats(ctx):
-    stats = open("rpcjokrstats.txt", "r")
+    stats = open("/home/JokrBot/rpcjokrstats.txt", "r")
     rsl = stats.read()
     win = rsl.count('Win ')
     ties = rsl.count('Tie ')
@@ -111,7 +111,7 @@ async def rpcstats(ctx):
 
 @client.command()
 async def findword(ctx, arg1):
-    wordsdata = json.load(open("JokrBot\data.json"))
+    wordsdata = json.load(open("/home/JokrBot/data.json"))
     arg1 = arg1.casefold()
     if arg1 in wordsdata:
         wordfound = wordsdata.get(arg1)

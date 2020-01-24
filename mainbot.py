@@ -60,58 +60,63 @@ async def rpc(ctx, int1):
         time.sleep(1)
         if aiPick == 1:
             await ctx.channel.send("Whoops, we both picked **Rock**!")
+            result = 'Tie'
         elif aiPick == 2:
             await ctx.channel.send("My **paper** beat your **rock**!")
+            result = 'Loss'
         elif aiPick == 3:
             await ctx.channel.send("Your **rock** destroyed my **scissors**!")
+            result = 'Win'
     elif int1 == 'paper':
         await ctx.channel.send("Hmm what should I pick?")
         time.sleep(1)
         if aiPick == 1:
             await ctx.channel.send("Your **paper** beat my **rock**! :(")
+            result = 'Win'
         elif aiPick == 2:
             await ctx.channel.send("We both chose **paper** it's a tie!")
+            result = 'Tie'
         elif aiPick == 3:
             await ctx.channel.send("My **scissors** destroyed your **paper**!")
+            result = 'Loss'
     elif int1 == 'scissors':
         await ctx.channel.send("Hmm what should I pick?")
         time.sleep(1)
         if aiPick == 1:
             await ctx.channel.send("My **Rock** beat your **scissors**")
+            result = 'Loss'
         elif aiPick == 2:
             await ctx.channel.send("Your **scissors** destroyed my **paper**!")
+            result = 'Win'
         elif aiPick == 3:
             await ctx.channel.send("We both chose **scissors** it's a draw!")
+            result = 'Tie'
     else:
         await ctx.channel.send("Error! 404")
-    if result == 'Win':
-        stats = open("rpcjokrstats.txt", "a")
-        stats.write("Win ")
-        stats.close()
-    elif result == 'Tie':
-        stats = open("rpcjokrstats.txt", "a")
-        stats.write("Tie ")
-        stats.close()
-    elif result == 'Loss':
-        stats = open("rpcjokrstats.txt", "a")
-        stats.write("Loss ")
-        stats.close()
-    else:
-        await ctx.channel.send("Error 405!")
-
+    with open("JokrBot\jokrstats.txt", 'a') as stats:
+        if result == 'Win':
+            stats.write("Win ")
+        elif result == 'Tie':
+            stats.write("Tie ")
+        elif result == 'Loss':
+            stats.write("Loss ")
+        else:
+            await ctx.channel.send("Error 405!")
+    stats.close()
+    
 @client.command()
 async def rpcstats(ctx):
-    stats = open("/home/JokrBot/rpcjokrstats.txt", "r")
-    rsl = stats.read()
-    win = rsl.count('Win ')
-    ties = rsl.count('Tie ')
-    loss = rsl.count('Loss ')
-    stats.close()
+    with open("JokrBot\jokrstats.txt", "r") as stats:
+        rsl = stats.read()
+        win = rsl.count('Win ')
+        ties = rsl.count('Tie ')
+        loss = rsl.count('Loss ')
+        stats.close()
     await ctx.channel.send("```Wins = " + str(win) + "\nDraws = " + str(ties) + "\nLosses = " + str(loss) + "```")
 
 @client.command()
 async def findword(ctx, arg1):
-    wordsdata = json.load(open("/home/JokrBot/data.json"))
+    wordsdata = json.load(open("JokrBot\data.json"))
     arg1 = arg1.casefold()
     if arg1 in wordsdata:
         wordfound = wordsdata.get(arg1)
@@ -136,5 +141,9 @@ async def on_ready():
     print(client.user.name)
     print(client.user.id)
     print('------')
+
+#@client.event
+#async def on_message(message):
+    #print(message)
 
 client.run(token)

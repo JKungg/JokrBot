@@ -113,6 +113,8 @@ async def rpcstats(ctx):
         loss = rsl.count('Loss ')
         stats.close()
     await ctx.channel.send("```Wins = " + str(win) + "\nDraws = " + str(ties) + "\nLosses = " + str(loss) + "```")
+    winper = win/(ties+loss)
+    await ctx.channel.send(winper)
 
 @client.command()
 async def findword(ctx, arg1):

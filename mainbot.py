@@ -6,6 +6,7 @@ import random
 import time
 import datetime
 import json
+import random
 
 token = os.environ.get('AuthToken')
 
@@ -92,7 +93,7 @@ async def rpc(ctx, int1):
             await ctx.channel.send("We both chose **scissors** it's a draw!")
             result = 'Tie'
     else:
-        await ctx.channel.send("Error! 404")
+        await ctx.channel.send("Error Code 1!")
     with open("JokrBot\jokrstats.txt", 'a') as stats:
         if result == 'Win':
             stats.write("Win ")
@@ -101,7 +102,7 @@ async def rpc(ctx, int1):
         elif result == 'Loss':
             stats.write("Loss ")
         else:
-            await ctx.channel.send("Error 405!")
+            await ctx.channel.send("Error Code 2!")
     stats.close()
     
 @client.command()
@@ -126,6 +127,16 @@ async def findword(ctx, arg1):
         await ctx.channel.send("Word not found, double check the spelling of the word.")
 
 ## Fun Commands <3
+
+@client.command()
+async def willwewin(ctx):
+    answer = random.randint(1,100)
+    if answer > 90:
+        await ctx.channel.send("You're gonna get destroyed, sorry for breaking the news :)")
+    elif answer < 90:
+        await ctx.channel.send("You'll probably win! That's a Big Surprise!")
+    else:
+        await ctx.channel.send("Error Code 3")
 
 @client.command()
 async def ryan(ctx):

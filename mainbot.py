@@ -16,17 +16,17 @@ client = commands.Bot(command_prefix = '.')
 
 
 @client.command()
-@commands.has_role('jokr')
+@commands.has_role(629817762897985576)
 async def scrim(ctx, arg1, arg2):
     role = ctx.guild.get_role(629817762897985576)
-    await client.get_channel(615938985914662922).send(f"{role.mention} Scrim Scheduled for: **{arg1.capitalize()}, {arg2.capitalize()}**")
+    await client.get_channel(615938985914662922).send(f"@everyone Scrim Scheduled for: **{arg1.capitalize()} at {arg2.capitalize()}**")
     await ctx.message.delete()
 
 @client.command()
-@commands.has_role('jokr')
+@commands.has_role(629817762897985576)
 async def setgame(ctx, arg1, arg2):
     role = ctx.guild.get_role(629817762897985576)
-    await client.get_channel(615938985914662922).send(f"{role.mention} League Match Scheduled for: **{arg1.capitalize()}, {arg2.capitalize()}**")
+    await client.get_channel(615938985914662922).send(f"@everyone League Match Scheduled for: **{arg1.capitalize()} at {arg2.capitalize()}**")
     await ctx.message.delete()
 
 @client.command()
@@ -39,7 +39,7 @@ async def sremind(ctx, arg1, arg2):
 
 
 @client.command()
-@commands.has_role('admin')
+@commands.has_permissions('Adminstrator')
 async def clear(ctx, int1):
     await ctx.message.delete()
     await ctx.channel.purge(limit=int(int1))

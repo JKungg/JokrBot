@@ -112,13 +112,12 @@ async def rpcstats(ctx):
         ties = rsl.count('Tie ')
         loss = rsl.count('Loss ')
         stats.close()
-    await ctx.channel.send("```Wins = " + str(win) + "\nDraws = " + str(ties) + "\nLosses = " + str(loss) + "```")
-    winper = win/(ties+loss)
-    await ctx.channel.send(winper)
+    winper = win/(ties+loss+win)
+    await ctx.channel.send(f"```Wins =  {win}\nDraws =  {ties}\nLosses =  {loss}\nWin Percentage =  {winper:.1%}```")
 
 @client.command()
 async def findword(ctx, arg1):
-    wordsdata = json.load(open("JokrBot\data.json"))
+    wordsdata = json.load(open("JokrBot\wordsforbot.json"))
     arg1 = arg1.casefold()
     if arg1 in wordsdata:
         wordfound = wordsdata.get(arg1)

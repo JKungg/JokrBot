@@ -39,7 +39,7 @@ async def sremind(ctx, arg1, arg2):
 
 
 @client.command()
-@commands.has_permissions('Adminstrator')
+@commands.has_role('admin')
 async def clear(ctx, int1):
     await ctx.message.delete()
     await ctx.channel.purge(limit=int(int1))
@@ -118,7 +118,7 @@ async def rpcstats(ctx):
 
 @client.command()
 async def findword(ctx, arg1):
-    wordsdata = json.load(open("JokrBot\wordsforbot.json"))
+    wordsdata = json.load(open("/home/JokrBot/wordsforbot.json"))
     arg1 = arg1.casefold()
     if arg1 in wordsdata:
         wordfound = wordsdata.get(arg1)

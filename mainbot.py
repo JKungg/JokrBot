@@ -6,7 +6,6 @@ import random
 import time
 import datetime
 import json
-import random
 
 token = os.environ.get('AuthToken')
 
@@ -125,6 +124,33 @@ async def findword(ctx, arg1):
         await ctx.channel.send(' '.join(wordfound))
     else:
         await ctx.channel.send("Word not found, double check the spelling of the word.")
+
+@client.command()
+async def numguess(ctx):
+    rnumber = random.randint(1,20)
+    guess = 0
+    user_guess = 0
+    print(rnumber)
+    while user_guess != rnumber:
+        initmessage = await ctx.send("Keep Guessing! 1 to 20!")
+        response = await client.wait_for('message', timeout=30.0)
+        user_guess = int(response.content)
+        if user_guess > rnumber:
+            await initmessage.edit(content="**Too high!**")
+            guess += 1
+            time.sleep(1)
+            continue
+        elif user_guess < rnumber:
+            await initmessage.edit(content="**Too low!**")
+            guess += 1
+            time.sleep(1)
+            continue
+        elif user_guess == rnumber:
+            guess += 1
+            await ctx.send(f"Good Job! You guessed it in **{str(guess)}** tries")
+            break
+        else:
+            await ctx.send("Error Code 5")
 
 ## Fun Commands <3
 

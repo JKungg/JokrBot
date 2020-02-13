@@ -78,7 +78,7 @@ async def sendScrape():
 
 
 scheduler = AsyncIOScheduler()
-scheduler.add_job(sendScrape, 'cron', day_of_week=3, hour=15, minute=15)
+scheduler.add_job(sendScrape, 'cron', day_of_week=3, hour=21, minute=40)
 scheduler.start()
 
 # END OF MATCH GETTER
